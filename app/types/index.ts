@@ -28,3 +28,7 @@ export interface PaginatedResponse<T>{
     data:T[],
     totalPages:number,
 }
+
+export interface Comment extends HNItem {
+    children: Comment[]
+}

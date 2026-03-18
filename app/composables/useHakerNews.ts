@@ -1,4 +1,4 @@
-import type { HNItem ,PaginatedResponse } from "~/types";
+import type { HNItem ,PaginatedResponse,Comment } from "~/types";
 
 
 
@@ -27,18 +27,19 @@ export function useHackerNews(){
         }
     }
 
-    const fetchComments = async (item:HNItem,depth:number = 0):Promise<HNItem[]>=>{
-        let coments:HNItem[];
+    const fetchComments = async (item:HNItem,depth:number = 0):Promise<Comment[]>=>{
+        let items:HNItem[];
         if(depth >= 3 || item.kids?.length === 0){
             return [];
         }
         else{
             depth++;
-            coments = await Promise.all((item.kids ?? []).map(kid => fetchItem(kid)));
-            for(const x of coments){
-                coments = [...coments,...await fetchComments(x,depth)];
-            }
-            return coments;
+            items = await Promise.all((item.kids ?? []).map(kid => fetchItem(kid)));
+            const comments = await Promise.all(items.map(async (post) => ({
+                ...post,
+                children: await fetchComments(post, depth)
+            })))
+            return comments;
         }
     }
 
