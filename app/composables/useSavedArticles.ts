@@ -21,7 +21,10 @@ export function useSavedArticles(){
     function toggleSave(article:Article){
         store.isSaved(article.id) ? store.remove(article.id) : store.save(article);
     }
+    function isSaved(id:number){
+        return store.isSaved(id);
+    }
 
 
-    return {loadFromStorage,saveToStorgae,toggleSave}
+    return {loadFromStorage,saveToStorgae,toggleSave,isSaved}
 }
