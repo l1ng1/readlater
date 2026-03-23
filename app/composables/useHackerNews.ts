@@ -1,4 +1,4 @@
-import type { HNItem ,PaginatedResponse,Comment } from "~/types";
+import type { HNItem ,PaginatedResponse,Comment, Article } from "~/types";
 
 
 
@@ -6,10 +6,10 @@ import type { HNItem ,PaginatedResponse,Comment } from "~/types";
 export function useHackerNews(){
 
 
-    const fetchTopStories = async(page:number):Promise<PaginatedResponse<HNItem>>=>{
+    const fetchTopStories = async(page:number):Promise<PaginatedResponse<Article>>=>{
         try{
-        const req = await fetch(`/api/top?page=${page}`);
-        return await req.json();
+        const data:PaginatedResponse<Article> = await $fetch(`/api/top?page=${page}`);
+        return data;
         }
         catch(e){
             throw createError("Не дулось получить топовые истории")
@@ -18,9 +18,8 @@ export function useHackerNews(){
 
     const fetchItem = async(id:number):Promise<HNItem>=>{
         try{        
-            const req = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
-            const res =await req.json();
-            return res;
+            const data:HNItem = await $fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+            return data;
         }
         catch(e){
             throw createError("Не удалось найти статью по такому id")

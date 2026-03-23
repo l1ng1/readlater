@@ -31,7 +31,8 @@ const page = ref(1);
 const hackerNews = useHackerNews()
 
 const {data,pending,error,refresh} = await useAsyncData(`top-stories-${page.value}`,()=>hackerNews.fetchTopStories(page.value),{
-    watch:[page]
+    watch:[page],
+    lazy:true,
 })
 
 const updateSearch = useDebounceFn((value:string)=>{
