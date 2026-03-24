@@ -7,6 +7,7 @@
     <p class="text-base">Comments: {{ data?.descendants }}</p>
     <p class="text-base font-bold">Score:{{ data?.score }}</p>
     <p class="text-base">Time:{{ convertedDate }}</p>
+    <CommentTree :comments="comments" />
     <button class="text-black text-base text-center bg-white px-6 py-3 mt-4 border border-black rounded"  @click="useArticles.toggleSave(data as Article)">Save</button>
 </div>
 <SkeletonCard v-else />
