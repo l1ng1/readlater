@@ -1,20 +1,34 @@
 
 <template>
-    <div class="flex-col w-64" >
-        <h3 class="text-lg"><a :href="props.article.url">{{ props.article.title }}</a></h3>
-        <p class="text-gray-500 text-sm">By: {{ props.article.by }}</p>
-        <p class="text-base">Comments: {{ props.article.descendants }}</p>
-        <p class="text-base font-bold">Score:{{ props.article.score }}</p>
-        <p class="text-base">Time:{{ convertedDate }}</p>
-        <p class="text-gray-500 text-sm">{{ useArticles.isSaved(props.article.id) ? 'saved':'not saved'}}</p>
-        <button class="text-black text-base text-center bg-white px-6 py-3 mt-4 border border-black rounded"  @click="useArticles.toggleSave(props.article)">Save</button>
+    <div class="flex flex-col gap-2 p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-white">
+        <h3 class="text-base font-semibold leading-snug">
+            <NuxtLink :to="`/article/${props.article.id}`" class="hover:text-blue-600 transition-colors">
+                {{ props.article.title }}
+            </NuxtLink>
+        </h3>
+        <div class="flex gap-4 text-sm text-gray-500">
+            <span>{{ props.article.by }}</span>
+            <span>{{ convertedDate }}</span>
+        </div>
+        <div class="flex gap-4 text-sm text-gray-600">
+            <span>⬆ {{ props.article.score }}</span>
+            <span>💬 {{ props.article.descendants }}</span>
+        </div>
+        <button 
+            class="self-start mt-1 px-3 py-1 text-sm rounded-lg border transition-colors"
+            :class="useArticles.isSaved(props.article.id) 
+                ? 'bg-blue-500 text-white border-blue-500' 
+                : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'"
+            @click="useArticles.toggleSave(props.article)"
+        >
+            {{ useArticles.isSaved(props.article.id) ? '✓ Saved' : 'Save' }}
+        </button>
     </div>
 </template>
 
 
 <script setup lang="ts">
 import type { Article } from '~/types';
-import { useSavedArticles } from '~/composables/useSavedArticles';
 
 const useArticles = useSavedArticles();
 

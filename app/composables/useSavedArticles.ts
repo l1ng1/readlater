@@ -3,10 +3,6 @@ import type { Article,SavedArticle } from "~/types";
 export function useSavedArticles(){
     const store = useSavedStore();
 
-    watch(store.savedArticle,()=>{
-        saveToStorgae(store.savedArticle)
-    })
-
     function loadFromStorage(){
         const data = localStorage.getItem("articles")
         if(!data) return
@@ -15,6 +11,7 @@ export function useSavedArticles(){
     }
 
     function saveToStorgae(savedArticle:SavedArticle[]){
+        console.log("SAVED"+savedArticle);
         localStorage.setItem('articles',JSON.stringify(savedArticle));
     }
     

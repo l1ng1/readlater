@@ -18,11 +18,13 @@ export const useSavedStore = defineStore("saved",{
             if(!this.isSaved(article.id)){
                 this.savedArticle.push({...article,savedAt:new Date().getTime()});
                 this.savedIds.add(article.id);
+                console.log(this.savedArticle+"SAVED ARTICLES")
             }
         },
         remove(id:number){
             this.savedArticle = this.savedArticle.filter((item)=>item.id !== id);
             this.savedIds.delete(id)
+            console.log(this.savedArticle+"SAVED ARTICLES")
         }
     }
 })

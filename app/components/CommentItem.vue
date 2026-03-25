@@ -1,10 +1,8 @@
 <template>
-
-<div>
-    <p class="text-lg">{{ props.comment.by }}</p>
-    <p>{{ props.comment.text }}</p>
+<div class="py-3 border-b border-gray-100">
+    <p class="text-sm font-semibold text-gray-700 mb-1">{{ props.comment.by }}</p>
+    <p class="text-sm text-gray-600 leading-relaxed" v-html="props.comment.text"></p>
 </div>
-
 </template>
 
 
